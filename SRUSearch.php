@@ -93,26 +93,31 @@ class SRUSearch {
 	 * @return $output the SRU response
 	 */
 	private function _search(){
-		// create curl resource
-		$ch = curl_init();
-		// set url
-		curl_setopt($ch, CURLOPT_URL, $this->searchURL);
-		if(isset($this->proxy_url) && isset($this->proxy_port)){
-			// set Proxy
-			curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, TRUE);
-			curl_setopt($ch, CURLOPT_PROXYPORT, $this->proxy_port);
-			curl_setopt($ch, CURLOPT_PROXY, $this->proxy_url);
+		try{
+			// create curl resource
+			$ch = curl_init();
+			// set url
+			curl_setopt($ch, CURLOPT_URL, $this->searchURL);
+			if(isset($this->proxy_url) && isset($this->proxy_port)){
+				// set Proxy
+				curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, TRUE);
+				curl_setopt($ch, CURLOPT_PROXYPORT, $this->proxy_port);
+				curl_setopt($ch, CURLOPT_PROXY, $this->proxy_url);
+			}
+			// $output contains the output string
+			$output = curl_exec($ch);
+			if(curl_errno($ch))
+			{
+				throw new Exception(curl_error($ch));
+			}
+			// close curl resource to free up system resources
+			curl_close($ch);
+			// return output
+			return $output;
+		} catch(Exception $e){
+			echo $e->getMessage();
+			die;
 		}
-		// $output contains the output string
-		$output = curl_exec($ch);
-		if(curl_errno($ch))
-		{
-			$output = 'cURL-Fehler: ' . curl_error($ch);
-		}
-		// close curl resource to free up system resources
-		curl_close($ch);
-		// return output
-		return $output;
 	}
 
 }
