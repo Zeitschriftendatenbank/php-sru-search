@@ -11,7 +11,8 @@ A very simple PHP SRU search client
      $search->setBaseURL("http://services.d-nb.de/sru/zdb");
      $search->setVersion("1.1");
      $search->setRecordSchema("MARC21-xml");
-     $search->setProxyURL("my.http-proxy.de");
+     $search->setCurlUse(true);
+     $search->setProxyURL("http://my.http-proxy.de");
      $search->setProxyPort("3333");
      $response = $search->searchRetrieve(urlencode("title=European journal of soil biology"));
      echo $response;
