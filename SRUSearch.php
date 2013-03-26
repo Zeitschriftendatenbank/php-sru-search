@@ -9,7 +9,6 @@
  * $search->setRecordSchema("MARC21-xml");
  * $response = $search->searchRetrieve(urlenocde("title=European journal of soil biology"));
  */
-error_reporting(E_ALL ^ E_NOTICE);
 
 class SRUSearch {
 	public $baseURL;
