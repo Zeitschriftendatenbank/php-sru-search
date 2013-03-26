@@ -9,11 +9,15 @@
  * $search->setRecordSchema("MARC21-xml");
  * $response = $search->searchRetrieve(urlenocde("title=European journal of soil biology"));
  */
+error_reporting(E_ALL ^ E_NOTICE);
 
 class SRUSearch {
 	public $baseURL;
 	public $version;
 	public $recordSchema;
+	public $recordPacking;
+	public $startRecord;
+	public $maximumRecords;
 	public $query;
 	public $proxy_url;
 	public $proxy_port;
@@ -22,31 +26,53 @@ class SRUSearch {
 	
 	/*
 	 * Set the base url
-	 * @param $url String
+	 * @param $url string
 	 */
 	public function setBaseURL($url){
 		$this->baseURL = $url;
 	}
 	/*
 	* Set the SRU Version
-	* @param $v String
+	* @param $v string
 	*/
 	public function setVersion($v){
 		$this->version = $v;
 	}
 	/*
 	* Set the record schema to return
-	* @param $schema String
+	* @param $schema string
 	*/
 	public function setRecordSchema($schema){
 		$this->recordSchema = $schema;
+	}	
+	/*
+	* Set the record packing
+	* @param $packing string
+	*/
+	public function setRecordPacking($packing){
+		$this->recordPacking = $packing;
+	}	
+	/*
+	* Set the start record number
+	* @param $start int
+	*/
+	public function setStartRecord($start){
+		$this->startRecord = $start;
+	}	
+	/*
+	* Set the maximum record number to return
+	* @param $maximum int
+	*/
+	public function setMaximumRecords($maximum){
+		$this->maximumRecords = $maximum;
 	}
 	/*
 	* Set the url of a proxy if one
-	* @param $purl String
+	* @param $purl string
 	*/
 	public function setProxyURL($purl){
 		$this->proxy_url = $purl;
+		if(isset($this->proxy_url)) $this->setCurlUse(true);
 	}
 	/*
 	* Set the proxy port if one
@@ -64,7 +90,7 @@ class SRUSearch {
 	}
 	/*
 	* internal method to build the url
-	* @param $q String : the url encoded searchstring
+	* @param $q string : the url encoded searchstring
 	*/	
 	private function buildSearchURL($q){
 		$this->searchURL = $this->baseURL;
@@ -72,25 +98,32 @@ class SRUSearch {
 		$this->searchURL .= "&recordSchema=".$this->recordSchema;
 		$this->searchURL .=  "&query=".$q;
 		$this->searchURL .=  "&operation=searchRetrieve";
+		// optinal parameters
+		if(isset($this->recordPacking)) $this->searchURL .= "&recordPacking=".$this->recordPacking;
+		if(isset($this->startRecord)) $this->searchURL .= "&startRecord=".$this->startRecord;
+		if(isset($this->maximumRecords)) $this->searchURL .= "&maximumRecords=".$this->maximumRecords;
 	}
 	/*
 	* Set all properties at once
-	* @param $url String
-	* @param $version String
-	* @param $schema String
-	* @param $purl String default is null
-	* @param $pp String default is null
+	* @param $url string
+	* @param $version string
+	* @param $schema string
+	* @param $purl string default is null
+	* @param $pp string default is null
 	*/
-	public function init($url,$version,$schema,$purl=null,$pp=null){
+	public function init($url,$version,$schema,$purl=null,$pp=null,$packing=null,$start=null,$maximum=null){
 		$this->setBaseURL($url);
 		$this->setVersion($version);
 		$this->setRecordSchema($schema);		
-		$this->setProxyURL($purl);		
+		$this->setRecordPacking($packing);		
+		$this->setStartRecord($start);		
+		$this->setMaximumRecords($maximum);
+		$this->setProxyURL($purl);
 		$this->setProxyPort($pp);		
 	}
 	/*
 	* init the search
-	* @param $query String : the query string url encoded
+	* @param $query string : the query string url encoded
 	*/	
 	public function searchRetrieve($query){
 		$this->buildSearchURL($query);
