@@ -141,7 +141,7 @@ class SRUSearch {
 				curl_setopt($ch, CURLOPT_URL, $this->searchURL);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-				curl_setopt($ch, CURLOPT_HEADER, true);
+				curl_setopt($ch, CURLOPT_HEADER, false);
 				if(isset($this->proxy_url) && isset($this->proxy_port)){
 					// set Proxy
 					curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, TRUE);
