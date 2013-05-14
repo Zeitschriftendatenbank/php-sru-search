@@ -23,49 +23,49 @@ class SRUSearch {
 	public $searchURL;
 	public $curluse = false;
 	
-	/*
+	/**
 	 * Set the base url
 	 * @param $url string
 	 */
 	public function setBaseURL($url){
 		$this->baseURL = $url;
 	}
-	/*
+	/**
 	* Set the SRU Version
 	* @param $v string
 	*/
 	public function setVersion($v){
 		$this->version = $v;
 	}
-	/*
+	/**
 	* Set the record schema to return
 	* @param $schema string
 	*/
 	public function setRecordSchema($schema){
 		$this->recordSchema = $schema;
 	}	
-	/*
+	/**
 	* Set the record packing
 	* @param $packing string
 	*/
 	public function setRecordPacking($packing){
 		$this->recordPacking = $packing;
 	}	
-	/*
+	/**
 	* Set the start record number
 	* @param $start int
 	*/
 	public function setStartRecord($start){
 		$this->startRecord = $start;
 	}	
-	/*
+	/**
 	* Set the maximum record number to return
 	* @param $maximum int
 	*/
 	public function setMaximumRecords($maximum){
 		$this->maximumRecords = $maximum;
 	}
-	/*
+	/**
 	* Set the url of a proxy if one
 	* @param $purl string
 	*/
@@ -73,25 +73,25 @@ class SRUSearch {
 		$this->proxy_url = $purl;
 		if(isset($this->proxy_url)) $this->setCurlUse(true);
 	}
-	/*
+	/**
 	* Set the proxy port if one
 	* @param $pp int
 	*/
 	public function setProxyPort($pp){
 		$this->proxy_port = $pp;
 	}	
-	/*
+	/**
 	* Set the to true to use curluse
 	*  @param $bool bool
 	*/
 	public function setCurlUse($bool){
 		$this->curluse = $bool;
 	}
-	/*
+	/**
 	* internal method to build the url
 	* @param $q string : the url encoded searchstring
 	*/	
-	private function buildSearchURL($q){
+	public function buildSearchURL($q){
 		$this->searchURL = $this->baseURL;
 		$this->searchURL .= "?version=".$this->version;
 		$this->searchURL .= "&recordSchema=".$this->recordSchema;
@@ -102,7 +102,7 @@ class SRUSearch {
 		if(isset($this->startRecord)) $this->searchURL .= "&startRecord=".$this->startRecord;
 		if(isset($this->maximumRecords)) $this->searchURL .= "&maximumRecords=".$this->maximumRecords;
 	}
-	/*
+	/**
 	* Set all properties at once
 	* @param $url string
 	* @param $version string
@@ -120,7 +120,7 @@ class SRUSearch {
 		$this->setProxyURL($purl);
 		$this->setProxyPort($pp);		
 	}
-	/*
+	/**
 	* init the search
 	* @param $query string : the query string url encoded
 	*/	
