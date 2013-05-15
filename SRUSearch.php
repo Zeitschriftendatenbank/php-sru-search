@@ -1,8 +1,9 @@
 <?php 
 /**
  * Very Simple PHP SRU Search Client
- * Author: Carsten Klee @ Zeitschriftendatenbank
- * Usage Example:
+ * 
+ * @author  Carsten Klee <carsten.klee@sbb.spk-berlin.de>
+ * @example 
  * $search = new SRUSearch();
  * $search->setBaseURL("http://services.d-nb.de/sru/zdb");
  * $search->setVersion("1.1");
@@ -25,49 +26,49 @@ class SRUSearch {
 	
 	/**
 	 * Set the base url
-	 * @param $url string
+	 * @param	string	$url	the base URL of the SRU service
 	 */
 	public function setBaseURL($url){
 		$this->baseURL = $url;
 	}
 	/**
 	* Set the SRU Version
-	* @param $v string
+	* @param	string	$v	the value of param version
 	*/
 	public function setVersion($v){
 		$this->version = $v;
 	}
 	/**
 	* Set the record schema to return
-	* @param $schema string
+	* @param	string	$schema	the value of param recordSchema
 	*/
 	public function setRecordSchema($schema){
 		$this->recordSchema = $schema;
 	}	
 	/**
 	* Set the record packing
-	* @param $packing string
+	* @param	string	$packing	the value of param recordPacking
 	*/
 	public function setRecordPacking($packing){
 		$this->recordPacking = $packing;
 	}	
 	/**
 	* Set the start record number
-	* @param $start int
+	* @param	int	$start	the value of param startRecord
 	*/
 	public function setStartRecord($start){
 		$this->startRecord = $start;
 	}	
 	/**
 	* Set the maximum record number to return
-	* @param $maximum int
+	* @param	int	$maximum	the value of param maximumRecords
 	*/
 	public function setMaximumRecords($maximum){
 		$this->maximumRecords = $maximum;
 	}
 	/**
 	* Set the url of a proxy if one
-	* @param $purl string
+	* @param	string	$purl	a proxy URL
 	*/
 	public function setProxyURL($purl){
 		$this->proxy_url = $purl;
@@ -75,21 +76,21 @@ class SRUSearch {
 	}
 	/**
 	* Set the proxy port if one
-	* @param $pp int
+	* @param	int	$pp	the proxy port
 	*/
 	public function setProxyPort($pp){
 		$this->proxy_port = $pp;
 	}	
 	/**
 	* Set the to true to use curluse
-	*  @param $bool bool
+	*  @param	bool	$bool 	true or false to enable/disable curl use
 	*/
 	public function setCurlUse($bool){
 		$this->curluse = $bool;
 	}
 	/**
 	* internal method to build the url
-	* @param $q string : the url encoded searchstring
+	* @param	string	$q	the url-encoded searchstring
 	*/	
 	public function buildSearchURL($q){
 		$this->searchURL = $this->baseURL;
@@ -104,11 +105,11 @@ class SRUSearch {
 	}
 	/**
 	* Set all properties at once
-	* @param $url string
-	* @param $version string
-	* @param $schema string
-	* @param $purl string default is null
-	* @param $pp string default is null
+	* @param	string	$url
+	* @param	string	$version
+	* @param	string	$schema
+	* @param	string	$purl	default is null
+	* @param	string	$pp	default is null
 	*/
 	public function init($url,$version,$schema,$purl=null,$pp=null,$packing=null,$start=null,$maximum=null){
 		$this->setBaseURL($url);
@@ -122,7 +123,7 @@ class SRUSearch {
 	}
 	/**
 	* init the search
-	* @param $query string : the query string url encoded
+	* @param	string	$query	the query string url-encoded
 	*/	
 	public function searchRetrieve($query){
 		$this->buildSearchURL($query);
@@ -130,7 +131,8 @@ class SRUSearch {
 	}
 	/**
 	 * internal method that does the search
-	 * @return $output the SRU response
+	 * 
+	 * @return		$output	the SRU response
 	 */
 	private function _search(){
 		if($this->curluse){
