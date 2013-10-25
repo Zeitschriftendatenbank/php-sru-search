@@ -1,40 +1,22 @@
-php-sru-search
-==============
+# php-sru-search
 
 A very simple PHP SRU search client
 
-##Examples
+## Usage
 
-    <?php
-     require_once("SRUSearch.php");
-     $search = new SRUSearch();
-     $search->setBaseURL("http://services.d-nb.de/sru/zdb");
-     $search->setVersion("1.1");
-     $search->setRecordSchema("MARC21-xml");
-     $search->setProxyURL("http://my.http-proxy.de"); // curl is automatically turned on 
-     $search->setProxyPort("3333");
-     $response = $search->searchRetrieve(urlencode("title=European journal of soil biology"));
-     echo $response;
-    ?>
+```php
+require_once("SRUSearch.php");
+use CK\SRUSearch;
+$search = new CK\SRUSearch\SRUSearch("http://services.d-nb.de/sru/zdb","1.1","MARC21-xml","http://my.http-proxy.de",3333,null,1,10);
+echo $search->searchRetrieve(urlencode("title=European journal of soil biology"));
+```
 
-
-    <?php
-     require_once("SRUSearch.php");
-     $search = new SRUSearch();
-     $search->init("http://services.d-nb.de/sru/zdb","1.1","MARC21-xml");
-     $response = $search->searchRetrieve(urlencode("title=European journal of soil biology"));
-     echo $response;
-    ?>
-	
-    <?php
-     require_once("SRUSearch.php");
-     $search = new SRUSearch();
-     $search->setBaseURL("http://services.d-nb.de/sru/zdb");
-     $search->setVersion("1.1");
-     $search->setRecordSchema("MARC21-xml");
-	 $search->setRecordPacking("xml");		
-	 $search->setStartRecord(11);		
-	 $search->setMaximumRecords(10);
-     $response = $search->searchRetrieve(urlencode("title=European journal of soil biology"));
-     echo $response;
-    ?>
+## params for SRUSearch
+* @param string $url The base URL of the SRU service
+* @param string $version The value for SRU param version
+* @param string $schema he value for SRU param recordSchema
+* @param null|string $purl The proxy URL
+* @param null|int $pp default The proxy port
+* @param null|string $packing The value for SRU param recordPacking
+* @param null|int $start The value for SRU param startRecord
+* @param null|int $maximum The value for SRU param maximumRecords
