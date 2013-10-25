@@ -20,3 +20,12 @@ echo $search->searchRetrieve(urlencode("title=European journal of soil biology")
 * @param null|string $packing The value for SRU param recordPacking
 * @param null|int $start The value for SRU param startRecord
 * @param null|int $maximum The value for SRU param maximumRecords
+
+# Install using composer
+```json
+{
+    "require": {
+       "ck/sru": "dev-master""
+    }
+}
+```
