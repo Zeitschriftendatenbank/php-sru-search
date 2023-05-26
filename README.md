@@ -1,4 +1,5 @@
-# php-sru-search
+# DEPRECATED
+php-sru-search
 
 A very simple PHP SRU search client
 
